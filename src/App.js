@@ -1,25 +1,64 @@
-import logo from './logo.svg';
 import './App.css';
+import Header from "./components/Header";
+import AddTodo from "./components/AddTodo";
+// import TodoItem from "./components/TodoItem";
+import TodoList from "./components/TodoList";
+import TodosCount from "./components/TodosCount";
+import React from 'react'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
 
-export default App;
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+    
+    this.state = {
+      todos:[
+        {
+          "userId": 1,
+          "id": 1,
+          "title": "delectus aut autem",
+          "completed": true
+        },
+        {
+          "userId": 1,
+          "id": 2,
+          "title": "fugiat veniam minus",
+          "completed": false
+        },
+        
+      ]}
+
+      this.addTodo = this.addTodo.bind(this);
+      this.deleteTodo = this.deleteTodo.bind(this);
+    }
+
+    addTodo(todo) {
+      let newOne = this.state.todos.push({
+        id: this.state.todos.length+1, 
+        title: todo, 
+        completed: false
+      });
+      this.setState({newOne})
+    }
+
+    deleteTodo(idx) {
+      let newOne = this.state.todos.splice(idx, 1)
+      this.setState({newOne})
+    }
+
+    render() {
+      return (
+        <div className="page">
+          <Header />
+          <main className="todoApp">
+          <AddTodo addTodo={this.addTodo}/>
+          <TodoList todos={this.state.todos} deleteTodo={this.deleteTodo}/>
+          <TodosCount count={this.state.todos.length}/>
+          </main>
+        </div>
+        );
+      }
+    }
+    
+    export default App;
+    
