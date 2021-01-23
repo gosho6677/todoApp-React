@@ -33,17 +33,26 @@ class App extends React.Component {
     }
 
     addTodo(todo) {
-      let newOne = this.state.todos.push({
+      // let newOne = this.state.todos.push({
+      //   id: this.state.todos.length+1, 
+      //   title: todo, 
+      //   completed: false
+      // });
+      
+      let newTodo = {
         id: this.state.todos.length+1, 
         title: todo, 
         completed: false
-      });
-      this.setState({newOne})
+      }
+      let newTodos = [...this.state.todos, newTodo]
+      this.setState({todos: newTodos})
+      console.dir(this.state.todos)
     }
 
     deleteTodo(idx) {
-      let newOne = this.state.todos.splice(idx, 1)
-      this.setState({newOne})
+      const todos = [...this.state.todos];
+      todos.splice(idx, 1);
+      this.setState({todos});
     }
 
     render() {
