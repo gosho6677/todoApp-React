@@ -12,58 +12,59 @@ class App extends React.Component {
     super(props)
     
     this.state = {
-      todos:[
-        {
-          "userId": 1,
-          "id": 1,
-          "title": "delectus aut autem",
-          "completed": true
-        },
-        {
-          "userId": 1,
-          "id": 2,
-          "title": "fugiat veniam minus",
-          "completed": false
-        },
-        
-      ]}
-
-      this.addTodo = this.addTodo.bind(this);
-      this.deleteTodo = this.deleteTodo.bind(this);
+      todos:[]
     }
-
-    addTodo(todo) {
-      // let newOne = this.state.todos.push({
-      //   id: this.state.todos.length+1, 
-      //   title: todo, 
-      //   completed: false
-      // });
-      
-      let newTodo = {
-        id: this.state.todos.length+1, 
-        title: todo, 
-        completed: false
+    
+    this.addTodo = this.addTodo.bind(this);
+    this.deleteTodo = this.deleteTodo.bind(this);
+  }
+  
+  componentDidMount() {
+    fetch('https://jsonplaceholder.typicode.com/todos')
+      .then(response => response.json())
+      .then(result => {
+        this.setState({
+          todos: result
+        })
       }
-      let newTodos = [...this.state.todos, newTodo]
-      this.setState({todos: newTodos})
-      console.dir(this.state.todos)
+      )
+  }
+  
+  addTodo(todo) {
+    let newTodo = {
+      id: this.state.todos[this.state.todos.length - 1].id + 1, 
+      title: todo, 
+      completed: false
     }
-
-    deleteTodo(idx) {
-      const todos = [...this.state.todos];
-      todos.splice(idx, 1);
+    let newTodos = [...this.state.todos, newTodo]
+    this.setState({todos: newTodos})
+  }
+  
+  deleteTodo(idx) {
+    const todos = this.state.todos.filter(todo=>todo.id !== idx);
+    this.setState({todos});
+  }
+  
+  toggleComplete = (todoId)=>{
+    const todos = this.state.todos.map(
+      todo=>todo.id===todoId ? {...todo,completed:!todo.completed} : {...todo}
+      );
       this.setState({todos});
-    }
-
+  }
+    
     render() {
       return (
         <div className="page">
-          <Header />
-          <main className="todoApp">
-          <AddTodo addTodo={this.addTodo}/>
-          <TodoList todos={this.state.todos} deleteTodo={this.deleteTodo}/>
-          <TodosCount count={this.state.todos.length}/>
-          </main>
+        <Header />
+        <main className="todoApp">
+        <AddTodo addTodo={this.addTodo}/>
+        <TodoList 
+        todos={this.state.todos} 
+        deleteTodo={this.deleteTodo}
+        toggleComplete={this.toggleComplete}
+        />
+        <TodosCount count={this.state.todos.length}/>
+        </main>
         </div>
         );
       }

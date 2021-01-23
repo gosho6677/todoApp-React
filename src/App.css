@@ -2,8 +2,6 @@
   height: 100vh;
   background: #333;
   padding-top: 3em;
-  margin: 3%;
-  border-radius: 5%;
 }
 header{
   font-size: 2em;
@@ -21,7 +19,6 @@ header{
   position: relative;
   line-height: 4em;
   vertical-align: middle;
-  margin: 2%;
 }
 .addTodo>input{
   width: 98%;
@@ -76,38 +73,42 @@ header{
   background: #777;
 }
 
-.removeTodo,.editTodo{
+.todoListItems li .title{
+  cursor: pointer;
+}
+
+.removeTodo,.editTodo, .togleComplete{
   float: right;
   width: 2em;
   height: 100%;
   text-align: center;
   box-sizing: border-box;
-  color: #FF7E7E;
+  /* color: #FF7E7E; */
+  color: aquamarine;
 }
-.removeTodo:hover, .editTodo:hover{
+.removeTodo:hover, .editTodo:hover, .togleComplete:hover{
   cursor: pointer;
 }
 
 /* stretch icon to containing div */
-.removeTodo i, .editTodo i{
+.removeTodo i, .editTodo i,.togleComplete i{
   display: block;
   width: 100%;
   height: 100%;
   opacity: .7;
 }
-.removeTodo i::before, .editTodo i::before{
+.removeTodo i::before, .editTodo i::before,.togleComplete i::before{
   vertical-align: middle;
   line-height: 3em;
   opacity: .7;
 }
 
-.removeTodo:hover i::before, .editTodo:hover i::before{
+.removeTodo:hover i::before, .editTodo:hover i::before, .togleComplete:hover i::before{
   opacity: 1;
 }
 
 .total{
   line-height: 3em;
-  text-align: center;
 }
 .completed{
   text-decoration: line-through;

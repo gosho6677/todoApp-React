@@ -1,17 +1,20 @@
 import React from "react";
 
 
-const TodoItem = ({todo, deleteTodo}) => {
+const TodoItem = ({todo, deleteTodo, toggleComplete, idx}) => {
 	const deleteHandler = e => {
-		let idx = todo.id
-		deleteTodo(idx - 1)
+		deleteTodo(todo.id)
 	}
-    return (
+	const handleToggleComplete = e => {
+		toggleComplete(todo.id);
+	}
+
+	return (
 		<li>
-			<span className="todoID">{todo.id}.</span>
-			<span className={todo.completed ? "completed" : ""}>{todo.title}</span>
+			<span className="todoID">{idx}.</span>
+			<span className={"title "+ (todo.completed ? "completed" : "")} onClick={handleToggleComplete}>{todo.title}</span>
 			<div className="removeTodo" onClick={deleteHandler}><i className="far fa-trash-alt"></i></div>
-			<div className="editTodo"><i className="fas fa-check-square"></i></div>
+			<div className="togleComplete" onClick={handleToggleComplete}><i className={"far "+(todo.completed ? "fa-check-square":"fa-square")}></i></div>
 		</li>
 	 );
 }
